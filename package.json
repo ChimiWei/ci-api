@@ -1,0 +1,23 @@
+{
+  "name": "ci-api",
+  "version": "1.0.0",
+  "description": "API for my web app \"Cipa Inova\"",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "author": "ChimiWei",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mssql": "^9.1.5",
+    "@types/node": "^20.14.11",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.1",
+    "mssql": "^11.0.1",
+    "tsx": "^4.16.2"
+  }
+}
