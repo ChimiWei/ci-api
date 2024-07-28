@@ -28,7 +28,7 @@ const funcionario = (codfilial: string, chapa: string) => { // Dados do FuncionÃ
 
 const funcComCpf = (codfilial: string, chapa: string) => { // Dados do FuncionÃ¡rio
   const sql: string = `
-  select F.chapa, F.nome, F.codcoligada, F.codfilial, S.DESCRICAO AS secao, right(P.CPF, 3) as confirmacao
+  select F.CHAPA, F.NOME, F.CODCOLIGADA, F.CODFILIAL, S.DESCRICAO AS SECAO, right(P.CPF, 3) as CONFIRMACAO
   from PFUNC F
   inner join PPESSOA P on P.CODIGO = F.CODPESSOA
   inner join PSECAO S on S.CODCOLIGADA = F.CODCOLIGADA AND S.CODIGO = F.CODSECAO
@@ -83,7 +83,7 @@ const funcComColigada = (codfilial: string, chapa: string) => {
 
 const funcTotalFilial = (codfilial: string) => {
   const sql: string = `
-  select count(F.chapa) as total
+  select count(F.chapa) as TOTAL
   from PFUNC F
   where F.CODFILIAL = @codfilial AND F.CODSITUACAO <> 'D'
   `
@@ -102,7 +102,7 @@ const funcTotalFilial = (codfilial: string) => {
 
 const imagem = (imageid: string) => {
   const sql: string = `
-  select id, imagem
+  select ID, IMAGEM
   from gimagem
   where id = @imageid
   `
@@ -119,11 +119,46 @@ const imagem = (imageid: string) => {
 
 }
 
+const confirmarVoto = (codfilial: string, chapa: string, digitos: string) => {
+  const sql: string = `
+ select @codfilial AS CODFILIAL, @chapa AS CHAPA,
+	CASE 
+	WHEN right(P.CPF, 3) = @digitos THEN 1
+	ELSE 0 END AS CONFIRMACAO
+    from PFUNC F (NOLOCK)
+    inner join PPESSOA P on P.CODIGO = F.CODPESSOA
+    inner join PSECAO S on S.CODCOLIGADA = F.CODCOLIGADA AND S.CODIGO = F.CODSECAO
+    where F.CHAPA = @chapa and F.CODFILIAL = @codfilial and F.CODSITUACAO <> 'D'
+  `
+
+  const params: Param[] = [
+    {
+      name: 'codfilial',
+      type: 'int',
+      value: codfilial
+    },
+    {
+      name: 'chapa',
+      type: 'varchar',
+      value: chapa
+    },
+    {
+      name: 'digitos',
+      type: 'int',
+      value: codfilial
+    }
+  ]
+
+  return { sql, params }
+
+}
+
 export default {
   funcionario,
   funcComCpf,
   funcComColigada,
   funcTotalFilial,
-  imagem
+  imagem,
+  confirmarVoto
 }
 

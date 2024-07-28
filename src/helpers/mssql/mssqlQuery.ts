@@ -16,6 +16,7 @@ async function mssqlQuery(query: string) {
 }
 
 async function mssqlStmtQuery(query: Query) {
+  if(query.params.find(param => param.value === undefined)) return "os parâmetros não foram informados."
   try {
       console.log('mssql - tentando conexão')
       const pool = await mssql.connect(config)

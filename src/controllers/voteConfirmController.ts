@@ -6,7 +6,8 @@ import spliStringToObj from "../helpers/splitStringToObj/splitStringToObj"
 async function handler(request: FastifyRequest, reply: FastifyReply) {
   const { parameters } = request.query as {parameters: string}
   const parameterObj = spliStringToObj(parameters)
-  const data = await mssqlStmtQuery(queryRepo.funcTotalFilial(parameterObj.codfilial))
+  const data = await mssqlStmtQuery(queryRepo.confirmarVoto(parameterObj.codfilial,
+  parameterObj.chapa, parameterObj.digitos))
   return data
 }
 

@@ -1,7 +1,7 @@
 type Param = {
   name: string,
   type: "varchar" | "int",
-  value: string | number
+  value: string | number | undefined
 }
 
 interface Query {
@@ -10,7 +10,7 @@ interface Query {
 }
 
 interface StmtParam {
-  [key: string]: string | number
+  [key: string]: string | number | undefined
 }
 
 export {Param, Query, StmtParam}
