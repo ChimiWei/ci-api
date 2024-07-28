@@ -6,7 +6,7 @@ import spliStringToObj from "../helpers/splitStringToObj/splitStringToObj"
 async function handler(request: FastifyRequest, reply: FastifyReply) {
   const { parameters } = request.query as {parameters: string}
   const parameterObj = spliStringToObj(parameters)
-  const data = await mssqlStmtQuery(queryRepo.imagem(parameterObj.idimage))
+  const data = await mssqlStmtQuery(queryRepo.imagem(parameterObj.idimagem))
   return data
 }
 
